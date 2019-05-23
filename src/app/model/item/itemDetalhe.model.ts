@@ -1,5 +1,4 @@
-import { ItemBase } from './itemBase.model';
-import { ConsultaRegrasFiscais } from './consultaRegrasFisicais.model';
+import { ConsultaRegrasFiscais } from '../consultaRegrasFisicais.model';
 
 export class ItemDetalhe {
   public filial: number;

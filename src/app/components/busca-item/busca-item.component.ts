@@ -11,7 +11,7 @@ export class BuscaItemComponent implements OnInit {
 
   listItemBase: Array<ItemBase> = new Array<ItemBase>();
 
-  constructor(private itemBaseService: ItemBaseService) { }
+  constructor(private itemBaseService: ItemBaseService, private modalService: NgbModal) { }
 
   ngOnInit() {
   }
@@ -26,4 +26,11 @@ export class BuscaItemComponent implements OnInit {
       this.listItemBase = response;
     });
   }
+
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
+  }
+
+
+
 }

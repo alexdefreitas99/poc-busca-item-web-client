@@ -4,7 +4,7 @@ import { BuscaItemComponent } from './components/busca-item/busca-item.component
 
 const routes: Routes = [
   {
-    path: 'busca',
+    path: '',
     component: BuscaItemComponent
   }
 ];
