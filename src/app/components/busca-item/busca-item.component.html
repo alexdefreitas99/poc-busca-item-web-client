@@ -1,6 +1,6 @@
 <button (click)="getItemByText()"></button>
 <tbody>
-  <tr *ngFor="let item of listItemDetalheResponse.itens">
+  <tr *ngFor="let item of listItemDetalheResponse">
     <td>{{ item.codigo }} - {{ item.ean }} - {{ item.descricaoMarcaPai }} - {{item.precoDe}} - {{item.precoPor }}</td>
   </tr>
 </tbody>

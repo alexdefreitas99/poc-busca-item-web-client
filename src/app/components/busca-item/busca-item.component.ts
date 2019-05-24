@@ -17,6 +17,7 @@ export class BuscaItemComponent implements OnInit {
 
   listItemBase: Array<ItemBase> = new Array<ItemBase>();
   listItemDetalheResponse: Array<ItemDetalheResponse> = new Array<ItemDetalheResponse>();
+  listItemEstoque: Array<ItemDetalhe> = new Array<ItemDetalhe>();
 
   constructor(private itemBaseService: ItemBaseService,
               private itemDetalheService: ItemDetalheService) { }
@@ -60,26 +61,25 @@ export class BuscaItemComponent implements OnInit {
 
   getEstoque() {
     let parametros = new HttpParams();
-    let itemEstoque: ItemDetalhe = new ItemDetalhe();
 // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.listItemDetalheResponse.length; i++) {
       parametros = parametros.append('itens', this.listItemDetalheResponse[i].codigo.toString());
    }
     const options = { params: parametros };
     this.itemDetalheService.findEstoqueByCodigo(options).subscribe((response: any) => {
-      itemEstoque = response;
+      this.listItemEstoque = response;
+      console.log(this.listItemEstoque);
       });
   }
 
   // createModel(){
+  //   this.listItemDetalheResponse.map(item => {
+  //     item.preco = this.
+  //   })
+
 
   //   for (let index = 0; index < this.listItemDetalheResponse.length; index++) {
-
-
   //   }
-
-
-
   //   let itemDetalheResponse = new ItemDetalheResponse();
   //   this.listItemDetalheResponse.forEach(element => {
   //     itemDetalheResponse.estoque =
