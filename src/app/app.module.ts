@@ -7,16 +7,10 @@ import { AppComponent } from './app.component';
 import { AuthInterceptor } from './http-interceptors/auth-interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ItemModule } from './modules/item.module';
-import { HeaderComponent } from './components/paginas/header/header.component';
-import { FooterComponent } from './components/paginas/footer/footer.component';
-import { BuscaComponent } from './components/busca/busca.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    BuscaComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

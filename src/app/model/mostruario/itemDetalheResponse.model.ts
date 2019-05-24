@@ -1,10 +1,15 @@
 import { DadosImagem } from '../dadosImagem.model';
 import { Categoria } from '../categoria.model';
+import { RegraFiscal } from '../RegraFiscal.model';
 
 export class ItemDetalheResponse{
   public codigo: number;
-  public codigoFabricante: number;
   public ean: number;
+  public preco: number;
+  public estoque: number;
+  public descricaoMarcaPai: string;
+
+  public codigoFabricante: number;
   public precoDe: number;
   public precoPor: number;
   public quantidade: number;
@@ -50,6 +55,5 @@ export class ItemDetalheResponse{
   public possuiEanImpresso: boolean;
   public usoContinuo: boolean;
   public codigoMarcaPai: number;
-  public descricaoMarcaPai: string;
   public itemAssinavel: boolean;
 }
