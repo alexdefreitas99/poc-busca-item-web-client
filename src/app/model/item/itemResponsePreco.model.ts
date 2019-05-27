@@ -1,6 +1,6 @@
-import { Preco } from '../preco.model';
+import { Preco } from '../any/preco.model';
 
-export class ResponseApiPreco {
-    codigoItem: number;
-    preco: Preco;
-  }
+export class ItemResponsePreco {
+  codigoItem: number;
+  preco: Preco;
+}

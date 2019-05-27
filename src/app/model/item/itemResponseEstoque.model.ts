@@ -1,4 +1,4 @@
-export class ResponseApiEstoque {
+export class ItemResponseEstoque {
   estoqueLoja: number;
   codigoItem: number;
 }

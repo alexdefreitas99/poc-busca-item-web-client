@@ -15,33 +15,57 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of listItemDetalheResponse">
-      <td>{{ item.codigo }}</td>
-      <td>{{ item.nomenclaturaDetalhada }} </td>
-      <td>{{ item.estoque }}</td>
-      <td> R$ {{ item.preco?.precoVenda }}</td>
-      <td> R$ {{ item.preco?.precoFidelidade }}</td>
-      <td>{{ item.descricaoMarcaPai }} </td>
+    <tr *ngFor="let item of listItemDetalheResponse" (click)="openModal(template, item)">
+      <td> {{ item.codigo }}</td>
+      <td> {{ item.nomenclatura }} </td>
+      <td> {{ item.estoque }} </td>
+      <td> R$ {{ item.preco?.precoVenda }} </td>
+      <td> R$ {{ item.preco?.precoFidelidade }} </td>
+      <td> {{ item.descricaoMarcaPai }} </td>
     </tr>
   </tbody>
 </table>
 
 
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row align-items-start">
+        <div class="col-sm"> Nomenclatura: {{item.nomenclatura}}</div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-md-4 ml-auto">Advertencias: {{item.advertencias}}</div>
+        <div class="col-md-4 ml-auto">PrincipioAtivo: {{item.principioAtivo}}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 ml-auto">Classe Terapeutica: {{item.classeTerapeutica}}</div>
+      </div>
 
-<!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Modal vertically centered</button>
-
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title">Modal title</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <div class="row justify-content-between">
+          <div class="col-4">
+              Preço:
+              <div class="row">
+                <div class="col-8 col-sm-6">
+                  De: {{item.precoDe}}
+                </div>
+                <div class="col-4 col-sm-6">
+                  Por: {{item.precoPor}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-4">Classe Terapeutica: {{item.classeTerapeutica}}</div>
+              </div>
+        </div>
+      <div class="row align-items-end">
+      </div>
     </div>
-    <div class="modal-body">
-      <p>One fine body&hellip;</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-    </div>
-  </ng-template> -->
+  </div>
+</ng-template>
