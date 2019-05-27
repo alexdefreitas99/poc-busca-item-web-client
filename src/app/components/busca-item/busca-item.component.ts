@@ -9,6 +9,7 @@ import { ItemService } from '../../services/itemService/item.service';
 import { ItemResponseEstoque } from 'src/app/model/item/itemResponseEstoque.model';
 import { ItemResponsePreco } from 'src/app/model/item/itemResponsePreco.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-busca-item',
@@ -28,18 +29,24 @@ export class BuscaItemComponent implements OnInit {
 
   ngOnInit() { }
 
-  constructor(private itemService: ItemService, private modalService: BsModalService) { }
+  constructor(private itemService: ItemService, private modalService: BsModalService, private toastr: ToastrService) { }
 
   buscaProduto(nome: string,
                codigoFilial = 1,
                maxResult = 40,
                ordenarRentabilidade = false,
                ordenarPreco = false) {
-    this.itemService.findByName(nome, codigoFilial, maxResult, ordenarRentabilidade, ordenarPreco).subscribe((
-      response: []) => {
-      this.listItemBase = response;
-      this.getDetalhe();
-    });
+    if (nome.length > 2) {
+      this.itemService.findByName(nome, codigoFilial, maxResult, ordenarRentabilidade, ordenarPreco).subscribe((
+        response: []) => {
+        this.listItemBase = response;
+        this.getDetalhe();
+      });
+    } else {
+      this.toastr.toastrConfig.preventDuplicates = true;
+      this.toastr.toastrConfig.positionClass = 'toast-center-center';
+      this.toastr.warning('Digite no mínimo três caracteres', 'Mensagem de aviso');
+    }
   }
 
 
@@ -68,6 +75,7 @@ export class BuscaItemComponent implements OnInit {
     this.itemService.findItemDetalhe(itemDetalhePost).subscribe((
       response: any) => {
       this.listItemDetalheResponse = response.itens;
+      console.log(JSON.stringify(response.itens));
       this.listItemBase = new Array<ItemResponse>();
       this.getEstoque();
       this.getPreco();

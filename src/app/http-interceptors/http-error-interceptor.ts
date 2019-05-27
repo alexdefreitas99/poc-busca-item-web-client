@@ -22,10 +22,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
           }
           if (error.status === 404) {
+            this.toastr.toastrConfig.preventDuplicates = true;
+            this.toastr.toastrConfig.positionClass = 'toast-center-center';
             this.toastr.error('Objeto não encontrado', 'Mensagem de erro');
-          }
-          if (error.status === 400) {
-            this.toastr.error('Digite no mínimo 3 caracteres', 'Mensagem de erro');
+          } else {
+            window.alert(errorMessage);
           }
           return throwError(errorMessage);
         })
