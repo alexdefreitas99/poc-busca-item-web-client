@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemBaseService } from '../../services/itemService/item-base.service';
-import { ItemBase } from 'src/app/model/item/itemBase.model';
-import { ItemDetalheService } from '../../services/itemService/item-detalhe.service';
-import { ItemDetalhe } from 'src/app/model/mostruario/itemDetalhe.model';
-import { Item } from 'src/app/model/mostruario/item.model';
-import { ConsultaRegrasFiscais } from 'src/app/model/ConsultaRegrasFiscais';
-import { ItemDetalheResponse } from '../../model/mostruario/itemDetalheResponse.model';
 import { HttpParams } from '@angular/common/http';
+import { ItemResponse } from '../../model/item/itemResponse.model';
+import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
+import { Item } from 'src/app/model/item/item.model';
+import { ItemPost } from 'src/app/model/item/itemPost.model';
+import { ConsultaRegrasFiscais } from 'src/app/model/any/consultaRegrasFiscais.model';
+import { ItemService } from '../../services/itemService/item.service';
+import { ItemResponseEstoque } from 'src/app/model/item/itemResponseEstoque.model';
+import { ItemResponsePreco } from 'src/app/model/item/itemResponsePreco.model';
 
 @Component({
   selector: 'app-busca-item',
@@ -15,22 +16,23 @@ import { HttpParams } from '@angular/common/http';
 })
 export class BuscaItemComponent implements OnInit {
 
-  listItemBase: Array<ItemBase> = new Array<ItemBase>();
-  listItemDetalheResponse: Array<ItemDetalheResponse> = new Array<ItemDetalheResponse>();
-  listItemEstoque: Array<ItemDetalhe> = new Array<ItemDetalhe>();
+  listItemBase: Array<ItemResponse> = new Array<ItemResponse>();
+  listItemDetalheResponse: Array<ItemResponseDetalhada> = new Array<ItemResponseDetalhada>();
+  listItemEstoqueResponse: Array<ItemResponseEstoque> = new Array<ItemResponseEstoque>();
+  listItemPrecoResponse: Array<ItemResponsePreco> = new Array<ItemResponsePreco>();
+  itemPesquisa: string;
 
-  constructor(private itemBaseService: ItemBaseService,
-              private itemDetalheService: ItemDetalheService) { }
+  constructor(private itemService: ItemService) { }
 
   ngOnInit() {
   }
 
-  getItemByText(nome = 'parace',
+  buscaProduto( nome: string,
                 codigoFilial = 1,
                 maxResult = 40,
                 ordenarRentabilidade = false,
                 ordenarPreco = false) {
-    this.itemBaseService.findByName(nome, codigoFilial, maxResult, ordenarRentabilidade, ordenarPreco).subscribe((
+    this.itemService.findByName(nome, codigoFilial, maxResult, ordenarRentabilidade, ordenarPreco).subscribe((
       response: []) => {
       this.listItemBase = response;
       this.getDetalhe();
@@ -38,51 +40,65 @@ export class BuscaItemComponent implements OnInit {
   }
 
   getDetalhe() {
-    const itemDetalhe: ItemDetalhe = new ItemDetalhe();
-    itemDetalhe.consultaRegrasFiscais = new ConsultaRegrasFiscais();
-    itemDetalhe.consultaRegrasFiscais.pais = 'BR';
-    itemDetalhe.consultaRegrasFiscais.paisDestino = 'BR';
-    itemDetalhe.consultaRegrasFiscais.uf = 'RS';
-    itemDetalhe.consultaRegrasFiscais.ufDestino = 'RS';
-    itemDetalhe.filial = 101;
-    itemDetalhe.perfil = 1;
+    const itemDetalhePost: ItemPost = new ItemPost();
+    itemDetalhePost.consultaRegrasFiscais = new ConsultaRegrasFiscais();
+    itemDetalhePost.consultaRegrasFiscais.pais = 'BR';
+    itemDetalhePost.consultaRegrasFiscais.paisDestino = 'BR';
+    itemDetalhePost.consultaRegrasFiscais.uf = 'RS';
+    itemDetalhePost.consultaRegrasFiscais.ufDestino = 'RS';
+    itemDetalhePost.filial = 101;
+    itemDetalhePost.perfil = 1;
     this.listItemBase.map(item => {
       const itemMap: Item = new Item();
       itemMap.codigo = item.codigoItem;
-      itemDetalhe.itens.push(itemMap);
+      itemDetalhePost.itens.push(itemMap);
     });
-    this.itemDetalheService.findItemDetalhe(itemDetalhe).subscribe((
+    this.itemService.findItemDetalhe(itemDetalhePost).subscribe((
       response: any) => {
       this.listItemDetalheResponse = response.itens;
-      this.listItemBase = new Array<ItemBase>();
+      this.listItemBase = new Array<ItemResponse>();
       this.getEstoque();
+      this.getPreco();
     });
   }
 
   getEstoque() {
     let parametros = new HttpParams();
-// tslint:disable-next-line: prefer-for-of
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.listItemDetalheResponse.length; i++) {
       parametros = parametros.append('itens', this.listItemDetalheResponse[i].codigo.toString());
-   }
+    }
     const options = { params: parametros };
-    this.itemDetalheService.findEstoqueByCodigo(options).subscribe((response: any) => {
-      this.listItemEstoque = response;
-      console.log(this.listItemEstoque);
-      });
+    this.itemService.findEstoqueByCodigo(options).subscribe((response: any) => {
+      this.listItemEstoqueResponse = response;
+    });
   }
 
-  // createModel(){
-  //   this.listItemDetalheResponse.map(item => {
-  //     item.preco = this.
-  //   })
+  getPreco() {
+    let parametros = new HttpParams();
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.listItemDetalheResponse.length; i++) {
+      parametros = parametros.append('item', this.listItemDetalheResponse[i].codigo.toString());
+    }
+    const options = { params : parametros };
+    this.itemService.findPreco(options, 101, 1).subscribe((response: any) => {
+      this.listItemPrecoResponse = response;
+      this.adicionaPrecoAndEstoqueNaLista();
+    });
+  }
+
+  adicionaPrecoAndEstoqueNaLista() {
+    this.listItemDetalheResponse.forEach((item, i) => {
+      const estoqueFiltrado = this.listItemEstoqueResponse.filter((estoqueFiltro) =>
+      estoqueFiltro.codigoItem === item.codigo
+      );
+      const precoFiltrado = this.listItemPrecoResponse.filter((precoFiltro) =>
+      precoFiltro.codigoItem === item.codigo
+      );
+      item.estoque = estoqueFiltrado[0].estoqueLoja;
+      item.preco = precoFiltrado[0].preco;
+    });
+  }
 
 
-  //   for (let index = 0; index < this.listItemDetalheResponse.length; index++) {
-  //   }
-  //   let itemDetalheResponse = new ItemDetalheResponse();
-  //   this.listItemDetalheResponse.forEach(element => {
-  //     itemDetalheResponse.estoque =
-  //   });
-  // }
 }
