@@ -1,9 +1,9 @@
 <div class="input-group mb-3" id="busca">
-  <input #nome (keyup.enter)="buscaProduto(nome.value)">
+  <input type="text" class="form-control" placeholder="Digite algo referente ao item desejado" #nome (keyup.enter)="buscaProduto(nome.value)">
   <button type="button" (click)="buscaProduto(nome.value)" class="btn btn-primary"> Pesquisar Item </button>
 </div>
 
-<table class="table table-dark table-hover">
+<table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">Cod. Item</th>
@@ -26,7 +26,6 @@
   </tbody>
 </table>
 
-
 <ng-template #template>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Modal</h4>
@@ -34,7 +33,6 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
   <div class="modal-body">
     <div class="container-fluid">
       <div class="row align-items-start">
@@ -47,23 +45,22 @@
       <div class="row">
         <div class="col-md-4 ml-auto">Classe Terapeutica: {{item.classeTerapeutica}}</div>
       </div>
-
       <div class="row justify-content-between">
-          <div class="col-4">
-              Preço:
-              <div class="row">
-                <div class="col-8 col-sm-6">
-                  De: {{item.precoDe}}
-                </div>
-                <div class="col-4 col-sm-6">
-                  Por: {{item.precoPor}}
-                </div>
-              </div>
+        <div class="col-4">
+          Preço:
+          <div class="row">
+            <div class="col-8 col-sm-6">
+              De: {{item.precoDe}}
             </div>
-            <div class="row">
-                <div class="col-4">Classe Terapeutica: {{item.classeTerapeutica}}</div>
-              </div>
+            <div class="col-4 col-sm-6">
+              Por: {{item.precoPor}}
+            </div>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-4">Classe Terapeutica: {{item.classeTerapeutica}}</div>
+        </div>
+      </div>
       <div class="row align-items-end">
       </div>
     </div>
