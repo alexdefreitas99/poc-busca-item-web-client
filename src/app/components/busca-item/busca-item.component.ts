@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ItemResponse } from '../../model/item/itemResponse.model';
 import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
@@ -8,6 +8,7 @@ import { ConsultaRegrasFiscais } from 'src/app/model/any/consultaRegrasFiscais.m
 import { ItemService } from '../../services/itemService/item.service';
 import { ItemResponseEstoque } from 'src/app/model/item/itemResponseEstoque.model';
 import { ItemResponsePreco } from 'src/app/model/item/itemResponsePreco.model';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-busca-item',
@@ -20,24 +21,35 @@ export class BuscaItemComponent implements OnInit {
   listItemDetalheResponse: Array<ItemResponseDetalhada> = new Array<ItemResponseDetalhada>();
   listItemEstoqueResponse: Array<ItemResponseEstoque> = new Array<ItemResponseEstoque>();
   listItemPrecoResponse: Array<ItemResponsePreco> = new Array<ItemResponsePreco>();
+  item: ItemResponseDetalhada = new ItemResponseDetalhada();
+
   itemPesquisa: string;
+  modalRef: BsModalRef;
 
-  constructor(private itemService: ItemService) { }
+  ngOnInit() { }
 
-  ngOnInit() {
-  }
+  constructor(private itemService: ItemService, private modalService: BsModalService) { }
 
-  buscaProduto( nome: string,
-                codigoFilial = 1,
-                maxResult = 40,
-                ordenarRentabilidade = false,
-                ordenarPreco = false) {
+  buscaProduto(nome: string,
+               codigoFilial = 1,
+               maxResult = 40,
+               ordenarRentabilidade = false,
+               ordenarPreco = false) {
     this.itemService.findByName(nome, codigoFilial, maxResult, ordenarRentabilidade, ordenarPreco).subscribe((
       response: []) => {
       this.listItemBase = response;
       this.getDetalhe();
     });
   }
+
+
+
+  openModal(template: TemplateRef<any>, item: any) {
+    this.item = item;
+    this.modalRef = this.modalService.show(template);
+  }
+
+
 
   getDetalhe() {
     const itemDetalhePost: ItemPost = new ItemPost();
@@ -59,7 +71,7 @@ export class BuscaItemComponent implements OnInit {
       this.listItemBase = new Array<ItemResponse>();
       this.getEstoque();
       this.getPreco();
-    });
+    }) ;
   }
 
   getEstoque() {
@@ -80,7 +92,7 @@ export class BuscaItemComponent implements OnInit {
     for (let i = 0; i < this.listItemDetalheResponse.length; i++) {
       parametros = parametros.append('item', this.listItemDetalheResponse[i].codigo.toString());
     }
-    const options = { params : parametros };
+    const options = { params: parametros };
     this.itemService.findPreco(options, 101, 1).subscribe((response: any) => {
       this.listItemPrecoResponse = response;
       this.adicionaPrecoAndEstoqueNaLista();
@@ -89,16 +101,15 @@ export class BuscaItemComponent implements OnInit {
 
   adicionaPrecoAndEstoqueNaLista() {
     this.listItemDetalheResponse.forEach((item, i) => {
-      const estoqueFiltrado = this.listItemEstoqueResponse.filter((estoqueFiltro) =>
-      estoqueFiltro.codigoItem === item.codigo
+      const estoqueFiltrado = this.listItemEstoqueResponse.find((estoqueFiltro) =>
+        estoqueFiltro.codigoItem === item.codigo
       );
-      const precoFiltrado = this.listItemPrecoResponse.filter((precoFiltro) =>
-      precoFiltro.codigoItem === item.codigo
+      item.estoque = estoqueFiltrado.estoqueLoja;
+
+      const precoFiltrado = this.listItemPrecoResponse.find((precoFiltro) =>
+        precoFiltro.codigoItem === item.codigo
       );
-      item.estoque = estoqueFiltrado[0].estoqueLoja;
-      item.preco = precoFiltrado[0].preco;
+      item.preco = precoFiltrado.preco;
     });
   }
-
-
 }
