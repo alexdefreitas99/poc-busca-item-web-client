@@ -1,4 +1,4 @@
-export class Imagem{
+export class Imagem {
   sequenciaImagem: number;
   numeroImagem: number;
   imagemPreferencial: string;

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ItemResponse } from '../../model/item/itemResponse.model';
 import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
@@ -10,6 +10,7 @@ import { ItemResponseEstoque } from 'src/app/model/item/itemResponseEstoque.mode
 import { ItemResponsePreco } from 'src/app/model/item/itemResponsePreco.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { Imagem } from '../../model/any/imagem.model';
 
 @Component({
   selector: 'app-busca-item',
@@ -31,6 +32,13 @@ export class BuscaItemComponent implements OnInit {
 
   constructor(private itemService: ItemService, private modalService: BsModalService, private toastr: ToastrService) { }
 
+  openModal(template: TemplateRef<any>, item: any) {
+    this.item = item;
+    this.modalService.config.animated = true;
+    this.modalService.config.ignoreBackdropClick = true;
+    this.modalRef = this.modalService.show(template);
+  }
+
   buscaProduto(nome: string,
                codigoFilial = 1,
                maxResult = 40,
@@ -49,14 +57,12 @@ export class BuscaItemComponent implements OnInit {
     }
   }
 
-
-
-  openModal(template: TemplateRef<any>, item: any) {
-    this.item = item;
-    this.modalRef = this.modalService.show(template);
+  addImagemSeNaoExistir(item: ItemResponseDetalhada) {
+    item.dadosImagens = new Array<Imagem>();
+    const imagem = new Imagem();
+    imagem.url = '../../../assets/images/sem-imagem.gif';
+    item.dadosImagens.push(imagem);
   }
-
-
 
   getDetalhe() {
     const itemDetalhePost: ItemPost = new ItemPost();
@@ -75,11 +81,10 @@ export class BuscaItemComponent implements OnInit {
     this.itemService.findItemDetalhe(itemDetalhePost).subscribe((
       response: any) => {
       this.listItemDetalheResponse = response.itens;
-      console.log(JSON.stringify(response.itens));
       this.listItemBase = new Array<ItemResponse>();
       this.getEstoque();
       this.getPreco();
-    }) ;
+    });
   }
 
   getEstoque() {
@@ -112,12 +117,14 @@ export class BuscaItemComponent implements OnInit {
       const estoqueFiltrado = this.listItemEstoqueResponse.find((estoqueFiltro) =>
         estoqueFiltro.codigoItem === item.codigo
       );
-      item.estoque = estoqueFiltrado.estoqueLoja;
-
       const precoFiltrado = this.listItemPrecoResponse.find((precoFiltro) =>
         precoFiltro.codigoItem === item.codigo
       );
+      item.estoque = estoqueFiltrado.estoqueLoja;
       item.preco = precoFiltrado.preco;
+      if (item.dadosImagens.length === 0) {
+        this.addImagemSeNaoExistir(item);
+      }
     });
   }
 }
