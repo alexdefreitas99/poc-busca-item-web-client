@@ -1,24 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BuscaItemComponent } from '../components/busca-item/busca-item.component';
-import { CommonModule } from '@angular/common';
 import { ItemService } from '../services/itemService/item.service';
-import { ModalItemComponent } from '../components/modal-item/modal-item.component';
+import { ModalModule } from './modal.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    ModalModule
   ],
   declarations: [
-    BuscaItemComponent,
-    ModalItemComponent
+    BuscaItemComponent
   ],
   providers: [
     ItemService
-  ],
-  entryComponents: [
-    ModalItemComponent
   ]
-
 })
 
 export class ItemModule { }

@@ -34,8 +34,7 @@ export class BuscaItemComponent implements OnInit {
 
   constructor(private itemService: ItemService,
               private toastr: ToastrService,
-              private modalService: BsModalService,
-              private http: HttpClient) { }
+              private modalService: BsModalService) { }
 
   openModal(item: any) {
     this.modalService.config.animated = true;

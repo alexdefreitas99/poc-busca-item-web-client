@@ -6,9 +6,9 @@ import { AppComponent } from './app.component';
 import { ItemModule } from './modules/item.module';
 import { BootstrapModule } from './modules/bootstrap.module';
 import { InterceptorsModule } from './modules/interceptors.module';
-import { SharedModule } from './modules/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-import { ModalItemComponent } from './components/modal-item/modal-item.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,9 +21,11 @@ import { ModalItemComponent } from './components/modal-item/modal-item.component
     HttpClientModule,
     BootstrapModule,
     InterceptorsModule,
-    SharedModule
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
-  providers: [  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

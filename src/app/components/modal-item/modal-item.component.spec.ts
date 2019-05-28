@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalItemComponent } from './modal-item.component';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 describe('ModalItemComponent', () => {
   let component: ModalItemComponent;
@@ -8,7 +9,7 @@ describe('ModalItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalItemComponent ]
+      declarations: [ ModalItemComponent ], providers: [ BsModalRef ]
     })
     .compileComponents();
   }));
