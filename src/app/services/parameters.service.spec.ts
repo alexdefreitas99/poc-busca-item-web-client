@@ -24,4 +24,8 @@ describe('ParametersService', () => {
     expect(parametersService.getValueFromProperties('api_nao_existente')).toBeUndefined();
   });
 
+  it('Should return undefined', () => {
+    parametersService = TestBed.get(ParametersService);
+    expect(parametersService.getValueFromProperties('')).toBeUndefined();
+  });
 });
