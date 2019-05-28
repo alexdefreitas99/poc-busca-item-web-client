@@ -8,6 +8,7 @@ import { BootstrapModule } from './modules/bootstrap.module';
 import { InterceptorsModule } from './modules/interceptors.module';
 import { SharedModule } from './modules/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ModalItemComponent } from './components/modal-item/modal-item.component';
 
 @NgModule({
   declarations: [

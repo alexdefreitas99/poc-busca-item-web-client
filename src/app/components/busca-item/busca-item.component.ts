@@ -1,5 +1,5 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { ItemResponse } from '../../model/item/itemResponse.model';
 import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
 import { Item } from 'src/app/model/item/item.model';
@@ -11,6 +11,7 @@ import { ItemResponsePreco } from 'src/app/model/item/itemResponsePreco.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Imagem } from '../../model/any/imagem.model';
+import { ModalItemComponent } from '../modal-item/modal-item.component';
 
 @Component({
   selector: 'app-busca-item',
@@ -23,20 +24,23 @@ export class BuscaItemComponent implements OnInit {
   listItemDetalheResponse: Array<ItemResponseDetalhada> = new Array<ItemResponseDetalhada>();
   listItemEstoqueResponse: Array<ItemResponseEstoque> = new Array<ItemResponseEstoque>();
   listItemPrecoResponse: Array<ItemResponsePreco> = new Array<ItemResponsePreco>();
-  item: ItemResponseDetalhada = new ItemResponseDetalhada();
 
-  itemPesquisa: string;
   modalRef: BsModalRef;
+
+  log: any;
+  logError: any;
 
   ngOnInit() { }
 
-  constructor(private itemService: ItemService, private modalService: BsModalService, private toastr: ToastrService) { }
+  constructor(private itemService: ItemService,
+              private toastr: ToastrService,
+              private modalService: BsModalService,
+              private http: HttpClient) { }
 
-  openModal(template: TemplateRef<any>, item: any) {
-    this.item = item;
+  openModal(item: any) {
     this.modalService.config.animated = true;
     this.modalService.config.ignoreBackdropClick = true;
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(ModalItemComponent, { initialState: { item } });
   }
 
   buscaProduto(nome: string,
@@ -122,6 +126,7 @@ export class BuscaItemComponent implements OnInit {
       );
       item.estoque = estoqueFiltrado.estoqueLoja;
       item.preco = precoFiltrado.preco;
+
       if (item.dadosImagens.length === 0) {
         this.addImagemSeNaoExistir(item);
       }
