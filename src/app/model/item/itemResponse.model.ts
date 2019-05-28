@@ -4,6 +4,7 @@ export class ItemResponse {
   nomeDetalhado: string;
   possuiItemAVencer: boolean;
   participaPbm: boolean;
+  participaNovoPack: boolean;
   permiteAdesao: boolean;
   possuiKitAdesao: boolean;
   exclusivoPanvel: boolean;

@@ -76,6 +76,7 @@ export class BuscaItemComponent implements OnInit {
     itemDetalhePost.consultaRegrasFiscais.ufDestino = 'RS';
     itemDetalhePost.filial = 101;
     itemDetalhePost.perfil = 1;
+    itemDetalhePost.itens = new Array<Item>();
     this.listItemBase.map(item => {
       const itemMap: Item = new Item();
       itemMap.codigo = item.codigoItem;
