@@ -43,7 +43,7 @@
     <img [src]="item.dadosImagens[0]?.url" alt="Sem Imagem" class="img-thumbnail">
   </div>
   <div class="clearfix"></div>
-  <p class="open_info hide">{{item.advertencias}}</p>
+  <p class="open_info hide" *ngFor="let adv of item.advertencias">{{adv}}</p>
 </div>
 <div class="modal-footer">
   <div class="text-right pull-right col-md-3">
