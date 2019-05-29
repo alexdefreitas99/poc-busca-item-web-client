@@ -8,7 +8,7 @@ export class ItemResponseDetalhada {
   ean: number;
   preco?: Preco;
   estoque?: number;
-  dadosImagens: Array<Imagem> = new Array<Imagem>();
+  dadosImagens: Array<Imagem>;
   precoDe: number;
   precoPor: number;
   categorias: Array<Categoria>;

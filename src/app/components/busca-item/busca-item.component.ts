@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { ItemResponse } from '../../model/item/itemResponse.model';
 import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
 import { Item } from 'src/app/model/item/item.model';
@@ -12,6 +12,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Imagem } from '../../model/any/imagem.model';
 import { ModalItemComponent } from '../modal-item/modal-item.component';
+
 
 @Component({
   selector: 'app-busca-item',
@@ -27,14 +28,12 @@ export class BuscaItemComponent implements OnInit {
 
   modalRef: BsModalRef;
 
-  log: any;
-  logError: any;
+  ngOnInit() {
+  }
 
-  ngOnInit() { }
-
-  constructor(private itemService: ItemService,
-              private toastr: ToastrService,
-              private modalService: BsModalService) { }
+  constructor(public itemService: ItemService,
+              public toastr: ToastrService,
+              public modalService: BsModalService) { }
 
   openModal(item: any) {
     this.modalService.config.animated = true;

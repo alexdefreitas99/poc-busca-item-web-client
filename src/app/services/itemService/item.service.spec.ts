@@ -1,97 +1,45 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
-// Other imports
-import { TestBed } from '@angular/core/testing';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ParametersService } from '../parameters.service';
 import { ItemService } from './item.service';
-import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
-import { ItemResponse } from '../../model/item/itemResponse.model';
+import { TestBed } from '@angular/core/testing';
+import { ItemServiceStub as stub } from './item.service.stub';
+import { of } from 'rxjs';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
-describe('HttpClient testing', () => {
-  let httpClient: HttpClient;
-  let httpTestingController: HttpTestingController;
+
+describe('ItemService', () => {
   let itemService: ItemService;
-  let parametersService: ParametersService;
+  let jasmineTest: any;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      // Import the HttpClient mocking services
-      imports: [ HttpClientTestingModule ],
-      // Provide the service-under-test and its dependencies
+    const testBed = TestBed.configureTestingModule({
+      imports: [
+      ],
       providers: [
         ItemService,
-        ParametersService
+        HttpClient,
+        HttpHandler
       ]
     });
-    httpClient = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get(HttpTestingController);
-    itemService = TestBed.get(ItemService);
-    parametersService = TestBed.get(ParametersService);
+    itemService = testBed.get(ItemService);
+    jasmineTest = jasmine.createSpyObj('ItemService', ['findByName']);
   });
 
-  afterEach(() => {
-    httpTestingController.verify();
-  });
+  describe('dado que ocorra um chamado para operação FindByName', () => {
+    describe('quando for passado algum parametro', () => {
+      describe('e ocorrer sucesso na operação', () => {
+        it('deve retornar um array de objeto', () => {
 
-  describe('get list of itens', () => {
-    let expectedItens: ItemResponse[];
+          spyOn(itemService, 'findByName').and.callFake(stub.mockFindByNameRequest);
+          expect(itemService.findByName('açfjasdf', 101, 200, false, false)).toBeDefined();
 
-    beforeEach(() => {
-      itemService = TestBed.get(ItemService);
-      expectedItens = [
-        {
-            codigoItem: 325538,
-            nomenclaturaVarejo: 'ROACUTAN 20MG 30 CAP          C2',
-            nomeDetalhado: 'Roacutan 20mg 30 Cápsulas',
-            possuiItemAVencer: true,
-            participaPbm: false,
-            participaNovoPack: false,
-            permiteAdesao: false,
-            possuiKitAdesao: false,
-            exclusivoPanvel: false,
-            participaListaReferencial: false,
-            participaFarmaciaPopular: false
-        },
-        {
-            codigoItem: 374008,
-            nomenclaturaVarejo: 'ROACUTAN 10MG 30 CAP          C2',
-            nomeDetalhado: 'Roacutan 10mg 30 Cápsulas',
-            possuiItemAVencer: false,
-            participaPbm: false,
-            participaNovoPack: false,
-            permiteAdesao: false,
-            possuiKitAdesao: false,
-            exclusivoPanvel: false,
-            participaListaReferencial: false,
-            participaFarmaciaPopular: false
-        }
-    ] as ItemResponse[ ];
+        });
+      });
+      describe('e ocorrer falha na operação', () => {
+        it('deve retornar um array de objeto vazio', () => {
+          spyOn(itemService, 'findByName').and.callFake(() => of(stub.mockFindByNameRequest()));
+          itemService.findByName('açfjasdf', 101, 200, false, false);
+        });
+
+      });
     });
-
-    // it('should return expected itens', () => {
-    //   itemService.findByName('roacutan', 101, 200, false, false).subscribe(
-    //     itens => expect(itens).toEqual(
-    //       expectedItens, 'Should return expected itens'
-    //     ), fail
-    //   );
-    // });
-
-
-    it('should turn 404 into an empty itens result', () => {
-
-      itemService.findByName('adfadsfasdf', 101, 200, false, false).subscribe(
-        itens => expect(itens.length).toEqual(0, 'should return empty itens array'),
-        fail
-      );
-
-      // const req = httpTestingController.expectOne(itemService.heroesUrl);
-
-      // // respond with a 404 and the error message in the body
-      // const msg = 'deliberate 404 error';
-      // req.flush(msg, {status: 404, statusText: 'Not Found'});
-    });
-
   });
-
 });

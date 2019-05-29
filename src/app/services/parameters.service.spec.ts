@@ -7,25 +7,24 @@ describe('ParametersService', () => {
 
   let parametersService: ParametersService;
 
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    parametersService = TestBed.get(ParametersService);
+  });
 
   it('should be created', () => {
-    parametersService = TestBed.get(ParametersService);
     expect(parametersService).toBeTruthy();
   });
 
   it('should use ParametersService', () => {
-    parametersService = TestBed.get(ParametersService);
     expect(parametersService.getValueFromProperties(Constantes.GRUPO_DIMED_SERVICE)).toBe('http://api-int.grupodimedservices.com.br/tst/');
   });
 
   it('Should return undefined', () => {
-    parametersService = TestBed.get(ParametersService);
     expect(parametersService.getValueFromProperties('api_nao_existente')).toBeUndefined();
   });
 
   it('Should return undefined', () => {
-    parametersService = TestBed.get(ParametersService);
     expect(parametersService.getValueFromProperties('')).toBeUndefined();
   });
 });
