@@ -3,7 +3,6 @@
     (keyup.enter)="buscaProduto(nome.value)">
   <button type="button" (click)="buscaProduto(nome.value)" class="btn btn-primary"> Pesquisar Item </button>
 </div>
-
 <div class="row">
   <div class="col-sm-4" *ngFor="let item of listItemDetalheResponse">
     <div class="card" (click)="openModal(item)">

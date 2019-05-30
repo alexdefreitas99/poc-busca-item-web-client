@@ -1,6 +1,7 @@
 .card {
   cursor: pointer;
   margin: 2%;
+  height: 90%;
 }
 .row{
   margin-left: 50px;
@@ -8,4 +9,5 @@
 }
 img{
   height: 250px;
+  min-height: 250px;
 }
