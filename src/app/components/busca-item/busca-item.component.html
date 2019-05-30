@@ -1,27 +1,26 @@
-<div class="input-group mb-3" id="busca">
+<div class="input-group mb-3 sticky-top" id="busca">
   <input type="text" class="form-control" placeholder="Digite algo referente ao item desejado" #nome
     (keyup.enter)="buscaProduto(nome.value)">
   <button type="button" (click)="buscaProduto(nome.value)" class="btn btn-primary"> Pesquisar Item </button>
 </div>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Cod. Item</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Estoque</th>
-      <th scope="col">Preço de Venda</th>
-      <th scope="col">Preço de Fidelidade</th>
-      <th scope="col">Decrição</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of listItemDetalheResponse" (click)="openModal(item)">
-      <td> {{ item.codigo }}</td>
-      <td> {{ item.nomenclatura }} </td>
-      <td> {{ item.estoque }} </td>
-      <td> R$ {{ item.preco?.precoVenda }} </td>
-      <td> R$ {{ item.preco?.precoFidelidade }} </td>
-      <td> {{ item.descricaoMarcaPai }} </td>
-    </tr>
-  </tbody>
-</table>
+
+<div class="row">
+  <div class="col-sm-4" *ngFor="let item of listItemDetalheResponse">
+    <div class="card" (click)="openModal(item)">
+      <img [src]="item?.dadosImagens[0]?.url" alt="Sem Imagem" class="img-thumbnail">
+      <div class="card-body">
+        <h5 class="card-title"> {{ item.nomenclatura }} </h5>
+        <tbody>
+          <tr>
+            <td> {{ item.estoque }} </td>
+            <td> {{ item.descricaoMarcaPai }} </td>
+          </tr>
+        </tbody>
+        <p> Preço de venda: R$ {{ item.preco?.precoVenda }}
+        </p>
+        <p>
+          Preço fidelidade: R$ {{ item.preco?.precoFidelidade }}
+        </p>
+      </div>
+    </div>
+  </div>

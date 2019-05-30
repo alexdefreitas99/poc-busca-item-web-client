@@ -1,3 +1,11 @@
-tbody > tr {
+.card {
   cursor: pointer;
+  margin: 2%;
+}
+.row{
+  margin-left: 50px;
+  margin-right: 50px
+}
+img{
+  height: 250px;
 }
