@@ -2,12 +2,12 @@
   cursor: pointer;
   margin: 2%;
   height: 90%;
+  width: 80%;
 }
 .row{
-  margin-left: 50px;
-  margin-right: 50px
+  margin-left: 5%;
 }
 img{
-  height: 250px;
-  min-height: 250px;
+  height: 26rem;
+  min-height: 25rem;
 }
