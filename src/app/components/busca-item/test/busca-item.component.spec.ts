@@ -29,7 +29,7 @@ describe('BuscaItemComponent', () => {
       .then(() => {
         itemService = TestBed.get(ItemService);
         toastrService = TestBed.get(ToastrService);
-        modalService = TestBed.get(BsModalService)
+        modalService = TestBed.get(BsModalService);
         fixture = TestBed.createComponent(BuscaItemComponent);
         component = fixture.componentInstance;
 

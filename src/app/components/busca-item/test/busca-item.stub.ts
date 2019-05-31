@@ -8,7 +8,7 @@ export class BuscaItemStub {
   public static mockItemDetalheResponse(): ItemResponseDetalhada[] {
     return [
       Builder<ItemResponseDetalhada>()
-      .advertencias(['a','b'])
+      .advertencias(['a', 'b'])
       .categorias([])
       .classeTerapeutica('a')
       .codigo(1)
@@ -30,7 +30,7 @@ export class BuscaItemStub {
 
   }
 
-  public static mockResponseEstoque(): ItemResponseEstoque[]{
+  public static mockResponseEstoque(): ItemResponseEstoque[] {
     return [
       Builder<ItemResponseEstoque>().codigoItem(1).estoqueLoja(1).build()
     ];
@@ -59,16 +59,16 @@ export class BuscaItemStub {
     .build()
     ];
   }
+  public static montaObjetoDoPostDetalhe() {}
 
   public show() { }
   public buscaProduto() { }
   public findByName() {}
-  public error(){}
+  public error() { }
   public findItemDetalhe() { }
   public findEstoqueByCodigo() { }
   public findPreco() { }
   public addImagemSeNaoExistir() { }
-  public config ( ) { }
+  public config( ) { }
   public toastrConfig() { }
-  public static montaObjetoDoPostDetalhe() {}
 }

@@ -55,7 +55,6 @@ export class BuscaItemComponent implements OnInit {
     }
   }
 
-
   montaObjetoDoPostDetalhe(responseFindByName) {
     const itemDetalhePost: ItemPost = new ItemPost();
     itemDetalhePost.consultaRegrasFiscais = new ConsultaRegrasFiscais();
