@@ -100,8 +100,8 @@ describe('BuscaItemComponent', () => {
   describe('Dado que [getEstoque] tenha sido chamada', () => {
     describe('Quando for chamada', () => {
       beforeEach(() => {
+        component.listItemDetalheResponse = stub.mockItemDetalheResponse();
         spyOn(itemService, 'findEstoqueByCodigo').and.returnValue(of(stub.mockResponseEstoque()));
-        const listItemDetalheResponse = stub.mockItemDetalheResponse();
         component.getEstoque();
       });
       it('Então deve chamar a função [getEstoque]', () => {
@@ -113,9 +113,24 @@ describe('BuscaItemComponent', () => {
   describe('Dado que [getPreco] tenha sido chamada', () => {
     describe('Quando for chamada', () => {
       beforeEach(() => {
+        component.listItemDetalheResponse = stub.mockItemDetalheResponse();
         spyOn(itemService, 'findPreco').and.returnValue(of(stub.mockResponsePreco()));
         spyOn(component, 'adicionaPrecoAndEstoqueNaLista');
         component.getPreco();
+      });
+      it('Então deve chamar a função [this.adicionaPrecoAndEstoqueNaLista()]', () => {
+        expect(component.adicionaPrecoAndEstoqueNaLista).toBeDefined();
+      });
+    });
+  });
+
+  describe('Dado que [adicionaPrecoAndEstoqueNaLista] tenha sido chamada', () => {
+    describe('Quando for chamada', () => {
+      beforeEach(() => {
+        component.listItemDetalheResponse = stub.mockItemDetalheResponse();
+        component.listItemEstoqueResponse = stub.mockResponseEstoque();
+        component.listItemPrecoResponse = stub.mockResponsePreco();
+        component.adicionaPrecoAndEstoqueNaLista();
       });
       it('Então deve chamar a função [this.adicionaPrecoAndEstoqueNaLista()]', () => {
         expect(component.adicionaPrecoAndEstoqueNaLista).toBeDefined();
