@@ -5,7 +5,6 @@ import { Constantes } from '../../global/constantes';
 import { Observable } from 'rxjs';
 import { ItemPost } from '../../model/item/itemPost.model';
 import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
-import { catchError } from 'rxjs/operators';
 import { ItemResponse } from '../../model/item/itemResponse.model';
 import { ItemResponseEstoque } from '../../model/item/itemResponseEstoque.model';
 import { ItemResponsePreco } from '../../model/item/itemResponsePreco.model';
