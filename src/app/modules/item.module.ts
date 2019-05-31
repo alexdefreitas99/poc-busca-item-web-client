@@ -3,7 +3,6 @@ import { BuscaItemComponent } from '../components/busca-item/busca-item.componen
 import { ItemService } from '../services/itemService/item.service';
 import { CommonModule } from '@angular/common';
 import { BootstrapModule } from './bootstrap.module';
-import { ParametersService } from '../services/parameters.service';
 
 @NgModule({
   imports: [
@@ -14,8 +13,7 @@ import { ParametersService } from '../services/parameters.service';
     BuscaItemComponent
   ],
   providers: [
-    ItemService,
-    ParametersService
+    ItemService
   ]
 })
 

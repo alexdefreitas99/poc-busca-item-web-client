@@ -5,6 +5,7 @@
     <button type="button" (click)="buscaProduto(nome.value)" class="btn btn-primary"> Pesquisar Item </button>
   </div>
 </nav>
+<div>
 <div class="row">
   <div class="col-sm-4" *ngFor="let item of listItemDetalheResponse">
     <div class="card" (click)="openModal(item)">
@@ -18,3 +19,7 @@
       </div>
     </div>
   </div>
+  <button *ngIf="isShow" (click)="goToTop()" class="goToTop btn btn-primary">Ir para o inicio da pagina</button>
+  </div>
+
+

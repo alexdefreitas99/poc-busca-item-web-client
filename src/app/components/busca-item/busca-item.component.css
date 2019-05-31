@@ -11,3 +11,13 @@ img{
   height: 26rem;
   min-height: 25rem;
 }
+
+.goToTop {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 5px;
+  outline: none;
+}

@@ -5,7 +5,6 @@ import { Constantes } from '../../global/constantes';
 import { Observable } from 'rxjs';
 import { ItemPost } from '../../model/item/itemPost.model';
 import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
-import { ItemResponse } from '../../model/item/itemResponse.model';
 import { ItemResponseEstoque } from '../../model/item/itemResponseEstoque.model';
 import { ItemResponsePreco } from '../../model/item/itemResponsePreco.model';
 
@@ -20,9 +19,9 @@ export class ItemService {
              codigoFilial: number,
              maxResult: number,
              ordenarRentabilidade: boolean,
-             ordenarPreco: boolean): Observable<ItemResponse[]> {
+             ordenarPreco: boolean): Observable<any> {
     // tslint:disable-next-line: max-line-length
-    return this.http.get<ItemResponse[]>(`${this.parameterService.getValueFromProperties(Constantes.GRUPO_DIMED_SERVICE)}item/v3/itens/base/autocomplete?nome=${nome}&codigoFilial=${codigoFilial}&maxResult=${maxResult}&ordenarRentabilidade=${ordenarRentabilidade}&ordenarPreco=${ordenarPreco}`);
+    return this.http.get(`${this.parameterService.getValueFromProperties(Constantes.GRUPO_DIMED_SERVICE)}item/v3/itens/base/autocomplete?nome=${nome}&codigoFilial=${codigoFilial}&maxResult=${maxResult}&ordenarRentabilidade=${ordenarRentabilidade}&ordenarPreco=${ordenarPreco}`);
   }
 
   findItemDetalhe(itemDetalhe: ItemPost): Observable<ItemResponseDetalhada[]> {

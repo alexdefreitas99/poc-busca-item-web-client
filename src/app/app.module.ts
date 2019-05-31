@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     ItemModule,
     HttpClientModule,
     BootstrapModule,
+    BrowserAnimationsModule,
     InterceptorsModule,
     FormsModule
   ],

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
 import { Item } from 'src/app/model/item/item.model';
@@ -12,7 +12,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Imagem } from '../../model/any/imagem.model';
 import { ModalItemComponent } from '../modal-item/modal-item.component';
 
-
 @Component({
   selector: 'app-busca-item',
   templateUrl: './busca-item.component.html',
@@ -20,19 +19,21 @@ import { ModalItemComponent } from '../modal-item/modal-item.component';
 })
 export class BuscaItemComponent implements OnInit {
 
+  constructor(public itemService: ItemService,
+              public toastr: ToastrService,
+              public modalService: BsModalService) { }
+
   listItemDetalheResponse: Array<ItemResponseDetalhada> = new Array<ItemResponseDetalhada>();
   listItemEstoqueResponse: Array<ItemResponseEstoque> = new Array<ItemResponseEstoque>();
   listItemPrecoResponse: Array<ItemResponsePreco> = new Array<ItemResponsePreco>();
 
   modalRef: BsModalRef;
 
-  ngOnInit() {
-    this.buscaProduto('ibupro')
-  }
+  isShow: boolean;
+  topPosToStartShowing = 100;
 
-  constructor(public itemService: ItemService,
-              public toastr: ToastrService,
-              public modalService: BsModalService) { }
+  ngOnInit() {
+  }
 
   openModal(item: any) {
     this.modalService.config.animated = true;
@@ -42,14 +43,15 @@ export class BuscaItemComponent implements OnInit {
 
   buscaProduto(nome: string) {
     if (nome.length > 2) {
-      this.itemService.findByName(nome , 101, 40, false, false).subscribe((
+      this.itemService.findByName(nome, 101, 40, false, false).subscribe((
         response: []) => {
         this.montaObjetoDoPostDetalhe(response);
+        this.goToTop();
       });
     } else {
       this.toastr.toastrConfig.preventDuplicates = true;
       this.toastr.toastrConfig.positionClass = 'toast-center-center';
-      this.toastr.warning('Digite no mínimo três caracteres', 'Mensagem de aviso');
+      this.toastr.error('Digite no mínimo três caracteres', 'Mensagem de aviso');
     }
   }
 
@@ -106,11 +108,11 @@ export class BuscaItemComponent implements OnInit {
   adicionaPrecoAndEstoqueNaLista() {
     this.listItemDetalheResponse.forEach((item, i) => {
       item.estoque = this.listItemEstoqueResponse.find((estoqueFiltro) =>
-                    estoqueFiltro.codigoItem === item.codigo
-                    ).estoqueLoja;
+        estoqueFiltro.codigoItem === item.codigo
+      ).estoqueLoja;
       item.preco = this.listItemPrecoResponse.find((precoFiltro) =>
-                    precoFiltro.codigoItem === item.codigo
-                    ).preco;
+        precoFiltro.codigoItem === item.codigo
+      ).preco;
 
       if (item.dadosImagens.length === 0) {
         this.addImagemSeNaoExistir(item);
@@ -123,5 +125,23 @@ export class BuscaItemComponent implements OnInit {
     const imagem = new Imagem();
     imagem.url = '../../../assets/images/sem-imagem.gif';
     item.dadosImagens.push(imagem);
+  }
+
+  @HostListener('window:scroll')
+  checkScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (scrollPosition >= this.topPosToStartShowing) {
+      this.isShow = true;
+    } else {
+      this.isShow = false;
+    }
+  }
+
+  goToTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 }
