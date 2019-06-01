@@ -32,7 +32,6 @@ describe('BuscaItemComponent', () => {
         modalService = TestBed.get(BsModalService);
         fixture = TestBed.createComponent(BuscaItemComponent);
         component = fixture.componentInstance;
-
         fixture.detectChanges();
       });
   }));
@@ -118,7 +117,7 @@ describe('BuscaItemComponent', () => {
         spyOn(component, 'adicionaPrecoAndEstoqueNaLista');
         component.getPreco();
       });
-      it('Então deve chamar a função [this.adicionaPrecoAndEstoqueNaLista()]', () => {
+      it('Então deve chamar a função [adicionaPrecoAndEstoqueNaLista()]', () => {
         expect(component.adicionaPrecoAndEstoqueNaLista).toBeDefined();
       });
     });
@@ -132,7 +131,7 @@ describe('BuscaItemComponent', () => {
         component.listItemPrecoResponse = stub.mockResponsePreco();
         component.adicionaPrecoAndEstoqueNaLista();
       });
-      it('Então deve chamar a função [this.adicionaPrecoAndEstoqueNaLista()]', () => {
+      it('Então deve chamar a função [adicionaPrecoAndEstoqueNaLista()]', () => {
         expect(component.adicionaPrecoAndEstoqueNaLista).toBeDefined();
       });
     });
