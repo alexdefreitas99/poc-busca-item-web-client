@@ -103,7 +103,9 @@
             ],
             "exclude": [
               "**/node_modules/**",
-              "./src/properties.json"
+              "./src/properties.json",
+              "**/*.stub.ts",
+              "./src/app/components/busca-item/test/busca-item.stub.ts"
             ]
           }
         }
