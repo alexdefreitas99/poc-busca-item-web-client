@@ -6,20 +6,20 @@
   </div>
 </nav>
 <div>
-<div class="row">
-  <div class="col-sm-4" *ngFor="let item of listItemDetalheResponse">
-    <div class="card" (click)="openModal(item)">
-      <img [src]="item?.dadosImagens[0]?.url" alt="Image not found" onerror="this.onerror=null;this.src='../../../assets/images/sem-imagem.gif'" />
-      <div class="card-body">
-        <h5 class="card-title"> {{ item.nomenclatura }} </h5>
-        <p> Estoque: {{ item.estoque }} </p>
-        <p> Marca pai: {{ item.descricaoMarcaPai }} </p>
-        <p> Preço de venda: R$ {{ item.preco?.precoVenda }}</p>
-        <p> Preço fidelidade: R$ {{ item.preco?.precoFidelidade }} </p>
+  <div class="row">
+    <div class="col-sm-4" *ngFor="let item of listItemDetalheResponse">
+      <div class="card" (click)="openModal(item)">
+        <img [src]="item?.dadosImagens[0]?.url" alt="Image not found"
+          onerror="this.onerror=null;this.src='../../../assets/images/sem-imagem.gif'" />
+        <div class="card-body">
+          <h5 class="card-title"> {{ item.nomenclatura }} </h5>
+          <p> Estoque: {{ item.estoque }} </p>
+          <p> Marca pai: {{ item.descricaoMarcaPai }} </p>
+          <p> Preço de venda: R$ {{ item.preco?.precoVenda }}</p>
+          <p> Preço fidelidade: R$ {{ item.preco?.precoFidelidade }} </p>
+        </div>
       </div>
     </div>
+    <button *ngIf="isShow" (click)="goToTop()" class="goToTop btn btn-primary">Ir para o inicio da pagina</button>
   </div>
-  <button *ngIf="isShow" (click)="goToTop()" class="goToTop btn btn-primary">Ir para o inicio da pagina</button>
-  </div>
-
-
+</div>
