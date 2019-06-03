@@ -9,7 +9,6 @@ import { ItemResponseEstoque } from 'src/app/model/item/itemResponseEstoque.mode
 import { ItemResponsePreco } from 'src/app/model/item/itemResponsePreco.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { Imagem } from '../../model/any/imagem.model';
 import { ModalItemComponent } from '../modal-item/modal-item.component';
 
 @Component({
