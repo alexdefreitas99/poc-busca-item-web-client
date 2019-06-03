@@ -137,17 +137,6 @@ describe('BuscaItemComponent', () => {
     });
   });
 
-  describe('Dado que [addImagemSeNaoExistir] tenha sido chamada', () => {
-    describe('Quando for chamada', () => {
-      beforeEach(() => {
-        component.addImagemSeNaoExistir(stub.mockItemDetalheResponse()[0]);
-      });
-      it('Então deve chamar a função [adicionaPrecoAndEstoqueNaLista()]', () => {
-        expect(component.addImagemSeNaoExistir).toBeDefined();
-      });
-    });
-  });
-
   describe('Dado que [openModal] tenha sido chamada', () => {
     describe('Quando for chamada', () => {
       beforeEach(() => {

@@ -112,18 +112,7 @@ export class BuscaItemComponent implements OnInit {
       item.preco = this.listItemPrecoResponse.find((precoFiltro) =>
         precoFiltro.codigoItem === item.codigo
       ).preco;
-
-      if (item.dadosImagens.length === 0) {
-        this.addImagemSeNaoExistir(item);
-      }
     });
-  }
-
-  addImagemSeNaoExistir(item: ItemResponseDetalhada) {
-    item.dadosImagens = new Array<Imagem>();
-    const imagem = new Imagem();
-    imagem.url = '../../../assets/images/sem-imagem.gif';
-    item.dadosImagens.push(imagem);
   }
 
   @HostListener('window:scroll')

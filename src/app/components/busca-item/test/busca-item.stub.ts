@@ -68,7 +68,6 @@ export class BuscaItemStub {
   public findItemDetalhe() { }
   public findEstoqueByCodigo() { }
   public findPreco() { }
-  public addImagemSeNaoExistir() { }
   public config( ) { }
   public toastrConfig() { }
 }
