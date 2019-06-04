@@ -5,7 +5,6 @@ import { ItemService } from './item.service';
 describe('ItemService', () => {
   let service: ItemService;
   beforeEach(() => {
-    const parametersServiceStub = { getValueFromProperties: arg1 => ({}) };
     const httpClientStub = {
       get: arg1 => ({}),
       post: (arg1, itemDetalhe2) => ({})
