@@ -1,8 +1,7 @@
 <nav class="navbar navbar-dark bg-primary sticky-top">
   <div class="input-group mx-auto " style="width: 70%;" id="busca">
     <input type="text" class="form-control" placeholder="Digite algo referente ao item desejado" #nome
-      (keyup.enter)="buscaProduto(nome.value)">
-    <button type="button" (click)="buscaProduto(nome.value)" class="btn btn-primary"> Pesquisar Item </button>
+      (change)="buscaProduto(nome.value)" id="itemSearch">
   </div>
 </nav>
 <div>
