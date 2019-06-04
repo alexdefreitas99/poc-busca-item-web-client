@@ -31,4 +31,28 @@ describe('ItemService', () => {
       expect(httpClientStub.post).toHaveBeenCalled();
     });
   });
+  describe('findByName', () => {
+    it('makes expected calls', () => {
+      const httpClientStub: HttpClient = TestBed.get(HttpClient);
+      spyOn(httpClientStub, 'get').and.callThrough();
+      service.findByName('aaa', 101, 200, false, false);
+      expect(httpClientStub.get).toHaveBeenCalled();
+    });
+  });
+  describe('findEstoqueByCodigo', () => {
+    it('makes expected calls', () => {
+      const httpClientStub: HttpClient = TestBed.get(HttpClient);
+      spyOn(httpClientStub, 'get').and.callThrough();
+      service.findEstoqueByCodigo('');
+      expect(httpClientStub.get).toHaveBeenCalled();
+    });
+  });
+  describe('findPreco', () => {
+    it('makes expected calls', () => {
+      const httpClientStub: HttpClient = TestBed.get(HttpClient);
+      spyOn(httpClientStub, 'get').and.callThrough();
+      service.findPreco('', 101, 101);
+      expect(httpClientStub.get).toHaveBeenCalled();
+    });
+  });
 });
