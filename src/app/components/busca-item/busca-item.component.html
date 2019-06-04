@@ -10,7 +10,7 @@
     <div class="col-sm-4" *ngFor="let item of listItemDetalheResponse">
       <div class="card" (click)="openModal(item)">
         <img [src]="item?.dadosImagens[0]?.url" alt="Image not found"
-          onerror="this.onerror=null;this.src='../../../assets/images/sem-imagem.gif'" />
+          onerror="this.onerror=null;this.src='../../../assets/images/semImagem.jpg'" />
         <div class="card-body">
           <h5 class="card-title"> {{ item.nomenclatura }} </h5>
           <p> Estoque: {{ item.estoque }} </p>
