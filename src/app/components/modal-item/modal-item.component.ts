@@ -6,13 +6,9 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './modal-item.component.html',
   styleUrls: ['./modal-item.component.css']
 })
-export class ModalItemComponent implements OnInit {
+export class ModalItemComponent {
 
   item;
 
   constructor(public modalRef: BsModalRef) { }
-
-  ngOnInit() {
-
-  }
 }
