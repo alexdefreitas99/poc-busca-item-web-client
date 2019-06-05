@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ItemResponseDetalhada } from '../../model/item/itemResponseDetalhada.model';
 import { Item } from 'src/app/model/item/item.model';
@@ -10,6 +10,7 @@ import { ItemResponsePreco } from 'src/app/model/item/itemResponsePreco.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ModalItemComponent } from '../modal-item/modal-item.component';
+import { ItemResponse } from '../../model/item/itemResponse.model';
 
 @Component({
   selector: 'app-busca-item',
@@ -31,7 +32,7 @@ export class BuscaItemComponent {
   isShow: boolean;
   topPosToStartShowing = 100;
 
-  openModal(item: any) {
+  openModal(item: ItemResponseDetalhada) {
     this.modalService.config.animated = true;
     this.modalService.config.ignoreBackdropClick = true;
     this.modalRef = this.modalService.show(ModalItemComponent, { initialState: { item }, class: 'modal-lg' });
@@ -40,7 +41,7 @@ export class BuscaItemComponent {
   buscaProduto(nome: string) {
     if (nome.length > 2) {
       this.itemService.findByName(nome, 101, 40, false, false).subscribe((
-        response: []) => {
+        response: ItemResponse) => {
         this.montaObjetoDoPostDetalhe(response);
         this.goToTop();
       });
@@ -84,7 +85,7 @@ export class BuscaItemComponent {
     for (const item of this.listItemDetalheResponse) {
       parametros = parametros.append('itens', item.codigo.toString());
     }
-    this.itemService.findEstoqueByCodigo({ params: parametros }).subscribe((response: any) => {
+    this.itemService.findEstoqueByCodigo(parametros).subscribe((response: ItemResponseEstoque[]) => {
       this.listItemEstoqueResponse = response;
     });
   }
@@ -94,7 +95,7 @@ export class BuscaItemComponent {
     for (const item of this.listItemDetalheResponse) {
       parametros = parametros.append('item', item.codigo.toString());
     }
-    this.itemService.findPreco({ params: parametros }, 101, 1).subscribe((response: any) => {
+    this.itemService.findPreco(parametros, 101, 1).subscribe((response: ItemResponsePreco[]) => {
       this.listItemPrecoResponse = response;
       this.adicionaPrecoAndEstoqueNaLista();
     });
