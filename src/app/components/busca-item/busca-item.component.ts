@@ -16,7 +16,7 @@ import { ModalItemComponent } from '../modal-item/modal-item.component';
   templateUrl: './busca-item.component.html',
   styleUrls: ['./busca-item.component.css']
 })
-export class BuscaItemComponent implements OnInit {
+export class BuscaItemComponent {
 
   constructor(public itemService: ItemService,
               public toastr: ToastrService,
@@ -30,9 +30,6 @@ export class BuscaItemComponent implements OnInit {
 
   isShow: boolean;
   topPosToStartShowing = 100;
-
-  ngOnInit() {
-  }
 
   openModal(item: any) {
     this.modalService.config.animated = true;
