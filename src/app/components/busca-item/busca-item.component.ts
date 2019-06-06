@@ -39,6 +39,7 @@ export class BuscaItemComponent {
   }
 
   buscaProduto(nome: string) {
+    this.listItemDetalheResponse = [];
     if (nome.length > 2) {
       this.itemService.findByName(nome, 101, 40, false, false).subscribe((
         response: ItemResponse) => {
