@@ -142,7 +142,7 @@ describe('BuscaItemComponent', () => {
       beforeEach(() => {
         spyOn(modalService, 'config').and.callFake(() => { });
         spyOn(modalService, 'show').and.callFake(() => { });
-        component.openModal(stub.mockItemDetalheResponse());
+        component.openModal(stub.mockItemDetalheResponse()[0]);
       });
       it('Então deve chamar a função [modal service]', () => {
         expect(modalService.show).toHaveBeenCalled();

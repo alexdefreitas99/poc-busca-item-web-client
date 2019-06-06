@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ItemPost } from '../../model/item/itemPost.model';
 import { ItemService } from './item.service';
 describe('ItemService', () => {
@@ -43,7 +43,7 @@ describe('ItemService', () => {
     it('makes expected calls', () => {
       const httpClientStub: HttpClient = TestBed.get(HttpClient);
       spyOn(httpClientStub, 'get').and.callThrough();
-      service.findEstoqueByCodigo('');
+      service.findEstoqueByCodigo(new HttpParams());
       expect(httpClientStub.get).toHaveBeenCalled();
     });
   });
@@ -51,7 +51,7 @@ describe('ItemService', () => {
     it('makes expected calls', () => {
       const httpClientStub: HttpClient = TestBed.get(HttpClient);
       spyOn(httpClientStub, 'get').and.callThrough();
-      service.findPreco('', 101, 101);
+      service.findPreco(new HttpParams(), 101, 101);
       expect(httpClientStub.get).toHaveBeenCalled();
     });
   });
