@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Constantes } from '../../global/constantes';
 import { Observable } from 'rxjs';
 import { ItemPost } from '../../model/item/itemPost.model';
